@@ -6,10 +6,7 @@ from selenium import webdriver
 from twilio.rest import Client
 
 data = []
-disclosures = []
 text_to_send = ''
-apple = False
-apple_string = ''
 
 # get list of URLs to visit and plunder!
 
@@ -17,8 +14,6 @@ try:
     url = 'https://github.com/pittcsc/Summer2022-Internships'
     r = requests.get(url)
     soup = bs(r.content, 'html.parser')
-
-     
     table = soup.find('table')
     table_body = table.find('tbody')
     rows = table_body.find_all('tr')
