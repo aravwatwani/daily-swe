@@ -5,6 +5,20 @@ from bs4 import BeautifulSoup as bs
 import requests
 # from selenium import webdriver
 from twilio.rest import Client
+import pandas as pd
+from os import chdir
+from glob import glob
+
+# move to the path where CSV files are located
+path = '/Users/aravwatwani/Desktop/projects/swe-daily-digest/'
+chdir(path)
+file_pattern = ".csv"
+list_of_files = [file for file in glob('*.csv'.format(file_pattern))]
+
+
+# prior data for checking if updates exist
+old_data = pd.read_csv('data.csv')
+
 
 data = defaultdict(list)
 text_to_send = ''
@@ -31,9 +45,27 @@ except:
    text_to_send = '🚨 Failed on bs4 execution'
 
 
+data = pd.DataFrame(data).T
+data.columns = ['Location', 'Role']
+data.sort_index(inplace=True)
+data.index.name = 'Company'
+data
 
-text_to_send = "Hello from Arav's bot 🤖 \n\n" 
-+ 'Here are the latest software engineering internship openings for you!' 
-+ '\n'.join(disclosures_clean) 
-+ '\n\nThis script used to generate this message runs every Monday-Friday at 8:08AM PST. Cool.'
 
+
+new_addition = False
+# if len(data) > len(old_data):
+#     new_addition = True
+
+old_set = set([company for company in old_data['Company']])
+new_set = set(data.index)
+new_roles = list(old_set.symmetric_difference(new_set))
+new_roles
+
+# text_to_send = "Hello from Arav's bot 🤖 \n\n" 
+# + 'Here are the latest software engineering internship openings for you!' 
+# + '\n'.join(disclosures_clean) 
+# + '\n\nThis script used to generate this message runs every Monday-Friday at 8:08AM PST. Cool.'
+
+
+data.to_csv('data.csv')
