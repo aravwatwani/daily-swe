@@ -62,11 +62,11 @@ if not new_addition:
 new_data.to_csv('data.csv')
 text_to_send = "Hello from Arav's bot 🤖\n\n" + 'Here are the latest software engineering internship openings for you! \n\n' + '\n'.join(all_new_roles) + '\n\nThis script used to generate this message runs every day at 8:00 AM PST.'
 
-account_sid = "AC5d802df6990d0429e81fa5f8a68ac729"
-auth_token = "1af26022324d4d304ca5c8214fafcc57"
+account_sid = "[redacted]"
+auth_token = "[redacted]"
 try:
    client = Client(account_sid, auth_token)
-   message = client.messages.create(body=text_to_send, to='+18582805902', from_='+19092545648')
+   message = client.messages.create(body=text_to_send, to='+[redacted]', from_='+[redacted]')
 except:
    print('🚨 Error connecting to Twilio client')
 
