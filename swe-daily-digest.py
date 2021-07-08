@@ -54,7 +54,10 @@ all_new_roles = []
 for index, company in enumerate(new_data['Company']):
     if company not in list(old_data['Company']):
         new_addition = True
-        all_new_roles.append(new_data['Role'][index] + " at " + company)
+        if str(new_data['Role'][index]) == 'nan':
+            all_new_roles.append("Openings at " + company)
+        else:
+            all_new_roles.append(new_data['Role'][index] + " at " + company)
 
 if not new_addition:
     exit()
